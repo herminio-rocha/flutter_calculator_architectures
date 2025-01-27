@@ -73,7 +73,7 @@
 </p>
 <ul>
   <li><strong>E-mail:</strong> <a href="mailto:herminio.rocha@outlook.com.br">herminio.rocha@outlook.com.br</a></li>
-  <li><strong>LinkedIn:</strong> <a href="www.linkedin.com/in/herminio-rocha-9325a2137" target="_blank">Herminio Rocha</a></li>
+  <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/herminio-rocha-9325a2137" target="_blank">Herminio Rocha</a></li>
 </ul>
 
 <br>
@@ -154,7 +154,7 @@
 </p>
 <ul>
   <li><strong>E-mail:</strong> <a href="mailto:herminio.rocha@outlook.com.br">herminio.rocha@outlook.com.br</a></li>
-  <li><strong>LinkedIn:</strong> <a href="www.linkedin.com/in/herminio-rocha-9325a2137" target="_blank">Herminio Rocha</a></li>
+  <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/herminio-rocha-9325a2137" target="_blank">Herminio Rocha</a></li>
 </ul>
 
 <br>
