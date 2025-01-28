@@ -1,3 +1,4 @@
+import 'package:calculator_mvc/utils/button_config.dart';
 import 'package:calculator_mvc/view/widgets/calculator_button.dart';
 import 'package:flutter/material.dart';
 
@@ -25,9 +26,9 @@ class _AndroidCalculatorViewState extends State<AndroidCalculatorView> {
             flex: 2,
             child: GridView.count(
               padding: EdgeInsets.fromLTRB(
-                MediaQuery.of(context).size.width * 0.025,
+                MediaQuery.of(context).size.width * 0.03,
                 MediaQuery.of(context).size.height * 0.03,
-                MediaQuery.of(context).size.width * 0.025,
+                MediaQuery.of(context).size.width * 0.03,
                 MediaQuery.of(context).size.height * 0.03,
               ),
               crossAxisSpacing: MediaQuery.of(context).size.width * 0.025,
@@ -35,28 +36,29 @@ class _AndroidCalculatorViewState extends State<AndroidCalculatorView> {
               crossAxisCount: 4,
               children: [
                 ...[
-                  "c",
-                  "⌫",
-                  "%",
-                  "÷",
-                  "7",
-                  "8",
-                  "9",
-                  "x",
-                  "4",
-                  "5",
-                  "6",
-                  "-",
-                  "1",
-                  "2",
-                  "3",
-                  "+",
-                  "00",
-                  "0",
-                  ".",
-                  "="
+                  ButtonConfig.clear,
+                  ButtonConfig.backspace,
+                  ButtonConfig.percent,
+                  ButtonConfig.divide,
+                  ButtonConfig.seven,
+                  ButtonConfig.eight,
+                  ButtonConfig.nine,
+                  ButtonConfig.multiply,
+                  ButtonConfig.four,
+                  ButtonConfig.five,
+                  ButtonConfig.six,
+                  ButtonConfig.subtract,
+                  ButtonConfig.one,
+                  ButtonConfig.two,
+                  ButtonConfig.three,
+                  ButtonConfig.add,
+                  ButtonConfig.doubleZero,
+                  ButtonConfig.zero,
+                  ButtonConfig.dot,
+                  ButtonConfig.equal
                 ].map(
-                  (label) => CalculatorButton(label: label),
+                  (buttonConfig) =>
+                      CalculatorButton(buttonConfig: buttonConfig),
                 )
               ],
             ),
