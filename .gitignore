@@ -64,3 +64,5 @@ calculator_mvc/app.*.map.json
 calculator_mvc/android/app/debug
 calculator_mvc/android/app/profile
 calculator_mvc/android/app/release
+
+./calculator_mvc/*
