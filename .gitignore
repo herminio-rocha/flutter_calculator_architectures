@@ -65,4 +65,4 @@ calculator_mvc/android/app/debug
 calculator_mvc/android/app/profile
 calculator_mvc/android/app/release
 
-./calculator_mvc/*
+**/calculator_mvc/**
