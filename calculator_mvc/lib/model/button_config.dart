@@ -1,33 +1,14 @@
 import 'dart:io';
+import 'package:calculator_mvc/controller/calculator_controller.dart';
+import 'package:calculator_mvc/model/button_category.dart';
 import 'package:flutter/material.dart';
 
-// Enum para categorizar os tipos de botão
-enum ButtonConfig {
-  clear("c", ButtonCategory.function),
-  backspace("⌫", ButtonCategory.function),
-  percent("%", ButtonCategory.operation),
-  divide("÷", ButtonCategory.operation),
-  multiply("x", ButtonCategory.operation),
-  subtract("-", ButtonCategory.operation),
-  add("+", ButtonCategory.operation),
-  nine("9", ButtonCategory.number),
-  eight("8", ButtonCategory.number),
-  seven("7", ButtonCategory.number),
-  six("6", ButtonCategory.number),
-  five("5", ButtonCategory.number),
-  four("4", ButtonCategory.number),
-  three("3", ButtonCategory.number),
-  two("2", ButtonCategory.number),
-  one("1", ButtonCategory.number),
-  doubleZero("00", ButtonCategory.number),
-  zero("0", ButtonCategory.number),
-  dot(".", ButtonCategory.number),
-  equal("=", ButtonCategory.result);
-
+class ButtonConfig {
   final String label;
   final ButtonCategory category;
+  final void Function(CalculatorController) onPressed;
 
-  const ButtonConfig(this.label, this.category);
+  const ButtonConfig(this.label, this.category, this.onPressed);
 
   // Função para obter as cores com base no sistema operacional e no tipo do botão
   Color get textColor {
@@ -153,11 +134,4 @@ enum ButtonConfig {
         return Colors.grey;
     }
   }
-}
-
-enum ButtonCategory {
-  number,
-  operation,
-  function,
-  result,
 }
