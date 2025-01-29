@@ -1,4 +1,6 @@
-import 'package:calculator_mvc/utils/button_config.dart';
+import 'package:calculator_mvc/controller/calculator_controller.dart';
+import 'package:calculator_mvc/model/button_config_repository.dart';
+import 'package:calculator_mvc/model/calculator_model.dart';
 import 'package:calculator_mvc/view/widgets/calculator_button.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,20 @@ class AndroidCalculatorView extends StatefulWidget {
 }
 
 class _AndroidCalculatorViewState extends State<AndroidCalculatorView> {
+  final CalculatorModel _calculatorModel = CalculatorModel();
+  late CalculatorController _calculatorController;
+
+  @override
+  void initState() {
+    _calculatorModel.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    _calculatorController = CalculatorController(_calculatorModel);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,30 +51,11 @@ class _AndroidCalculatorViewState extends State<AndroidCalculatorView> {
               mainAxisSpacing: MediaQuery.of(context).size.height * 0.025,
               crossAxisCount: 4,
               children: [
-                ...[
-                  ButtonConfig.clear,
-                  ButtonConfig.backspace,
-                  ButtonConfig.percent,
-                  ButtonConfig.divide,
-                  ButtonConfig.seven,
-                  ButtonConfig.eight,
-                  ButtonConfig.nine,
-                  ButtonConfig.multiply,
-                  ButtonConfig.four,
-                  ButtonConfig.five,
-                  ButtonConfig.six,
-                  ButtonConfig.subtract,
-                  ButtonConfig.one,
-                  ButtonConfig.two,
-                  ButtonConfig.three,
-                  ButtonConfig.add,
-                  ButtonConfig.doubleZero,
-                  ButtonConfig.zero,
-                  ButtonConfig.dot,
-                  ButtonConfig.equal
-                ].map(
-                  (buttonConfig) =>
-                      CalculatorButton(buttonConfig: buttonConfig),
+                ...ButtonConfigRepository.buttons.map(
+                  (buttonConfig) => CalculatorButton(
+                    buttonConfig: buttonConfig,
+                    calculatorController: _calculatorController,
+                  ),
                 )
               ],
             ),

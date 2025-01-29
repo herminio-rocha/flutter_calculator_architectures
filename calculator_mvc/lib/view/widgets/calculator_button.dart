@@ -1,17 +1,23 @@
 import 'dart:io';
 
-import 'package:calculator_mvc/utils/button_config.dart';
+import 'package:calculator_mvc/controller/calculator_controller.dart';
+import 'package:calculator_mvc/model/button_config.dart';
 import 'package:flutter/material.dart';
 
 class CalculatorButton extends StatelessWidget {
   final ButtonConfig buttonConfig;
+  final CalculatorController calculatorController;
 
-  const CalculatorButton({super.key, required this.buttonConfig});
+  const CalculatorButton({
+    super.key,
+    required this.buttonConfig,
+    required this.calculatorController,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () => buttonConfig.onPressed(calculatorController),
       style: ElevatedButton.styleFrom(
         backgroundColor:
             buttonConfig.backgroundColor, //colorButton ?? Colors.grey[850]!,
