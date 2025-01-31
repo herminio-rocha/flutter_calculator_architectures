@@ -25,7 +25,7 @@ class CalculatorController {
 
   void inputNumber(String number) => _calculatorModel.inputNumber(number);
 
-  void dot() => _calculatorModel.dot();
+  void decimalSeparator() => _calculatorModel.decimalSeparator();
 
   void calculate() => _calculatorModel.calculate();
 }
