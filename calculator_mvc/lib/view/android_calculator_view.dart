@@ -1,5 +1,5 @@
 import 'package:calculator_mvc/controller/calculator_controller.dart';
-import 'package:calculator_mvc/model/button_config_repository.dart';
+import 'package:calculator_mvc/model/calculator_button_config_repository.dart';
 import 'package:calculator_mvc/model/calculator_model.dart';
 import 'package:calculator_mvc/view/widgets/android_text_style.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +94,7 @@ class _AndroidCalculatorViewState extends State<AndroidCalculatorView> {
               crossAxisCount: 4,
               clipBehavior: Clip.hardEdge,
               children: [
-                ...ButtonConfigRepository.buttons.map(
+                ...CalculatorButtonConfigRepository.buttons.map(
                   (buttonConfig) => AndroidCalculatorButton(
                     buttonConfig: buttonConfig,
                     calculatorController: _calculatorController,

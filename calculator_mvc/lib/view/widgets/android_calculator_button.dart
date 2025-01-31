@@ -1,10 +1,10 @@
 import 'package:calculator_mvc/controller/calculator_controller.dart';
-import 'package:calculator_mvc/model/button_config.dart';
+import 'package:calculator_mvc/model/calculator_button_config.dart';
 import 'package:calculator_mvc/view/widgets/android_text_style.dart';
 import 'package:flutter/material.dart';
 
 class AndroidCalculatorButton extends StatelessWidget {
-  final ButtonConfig buttonConfig;
+  final CalculatorButtonConfig buttonConfig;
   final CalculatorController calculatorController;
 
   const AndroidCalculatorButton({
