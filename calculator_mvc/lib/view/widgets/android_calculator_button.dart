@@ -1,14 +1,13 @@
-import 'dart:io';
-
 import 'package:calculator_mvc/controller/calculator_controller.dart';
 import 'package:calculator_mvc/model/button_config.dart';
+import 'package:calculator_mvc/view/widgets/android_text_style.dart';
 import 'package:flutter/material.dart';
 
-class CalculatorButton extends StatelessWidget {
+class AndroidCalculatorButton extends StatelessWidget {
   final ButtonConfig buttonConfig;
   final CalculatorController calculatorController;
 
-  const CalculatorButton({
+  const AndroidCalculatorButton({
     super.key,
     required this.buttonConfig,
     required this.calculatorController,
@@ -19,24 +18,16 @@ class CalculatorButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () => buttonConfig.onPressed(calculatorController),
       style: ElevatedButton.styleFrom(
-        backgroundColor:
-            buttonConfig.backgroundColor, //colorButton ?? Colors.grey[850]!,
+        backgroundColor: buttonConfig.backgroundColor,
         foregroundColor: buttonConfig.textColor,
-        shape: Platform.isAndroid
-            ? RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
-                side: BorderSide(
-                  color: buttonConfig.borderColor,
-                  width: 2,
-                ),
-              )
-            : CircleBorder(
-                side: BorderSide(
-                  color: buttonConfig.borderColor,
-                  width: 2,
-                ),
-              ),
-        elevation: Platform.isAndroid ? 16 : 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+          side: BorderSide(
+            color: buttonConfig.borderColor,
+            width: 2,
+          ),
+        ),
+        elevation: 16,
         shadowColor: Colors.black,
       ),
       child: Row(
@@ -46,9 +37,8 @@ class CalculatorButton extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 buttonConfig.label,
-                style: const TextStyle(
-                  fontSize: 50,
-                  fontFamily: "Courier New",
+                style: androidTextStyle(
+                  color: buttonConfig.textColor,
                 ),
               ),
             ),
