@@ -11,7 +11,7 @@ class CalculatorController {
 
   void clear() => _calculatorModel.clear();
 
-  void backspace() => _calculatorModel.clear();
+  void backspace() => _calculatorModel.backspace();
 
   void percent() => _calculatorModel.percent();
 
@@ -25,7 +25,7 @@ class CalculatorController {
 
   void inputNumber(String number) => _calculatorModel.inputNumber(number);
 
-  void inputDot() => _calculatorModel.inputDot();
+  void dot() => _calculatorModel.dot();
 
   void calculate() => _calculatorModel.calculate();
 }
