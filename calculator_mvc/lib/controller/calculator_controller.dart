@@ -5,6 +5,10 @@ class CalculatorController {
 
   CalculatorController(this._calculatorModel);
 
+  String get equationString => _calculatorModel.equationString;
+
+  String get resultString => _calculatorModel.resultString;
+
   void clear() => _calculatorModel.clear();
 
   void backspace() => _calculatorModel.clear();
