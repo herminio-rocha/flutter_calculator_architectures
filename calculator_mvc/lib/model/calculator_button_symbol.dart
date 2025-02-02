@@ -16,7 +16,7 @@ enum CalculatorButtonSymbol {
   seven("7"),
   eight("8"),
   nine("9"),
-  doubleZerro("00"),
+  doubleZero("00"),
   decimalSeparator(","),
   calculate("=");
 
