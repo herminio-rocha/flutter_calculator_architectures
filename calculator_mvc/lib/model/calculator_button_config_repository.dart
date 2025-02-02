@@ -103,10 +103,10 @@ class CalculatorButtonConfigRepository {
       (calculatorController) => calculatorController.add(),
     ),
     CalculatorButtonConfig(
-      CalculatorButtonSymbol.doubleZerro.label,
+      CalculatorButtonSymbol.doubleZero.label,
       CalculatorButtonCategory.number,
       (calculatorController) => calculatorController.inputNumber(
-        CalculatorButtonSymbol.doubleZerro.label,
+        CalculatorButtonSymbol.doubleZero.label,
       ),
     ),
     CalculatorButtonConfig(
