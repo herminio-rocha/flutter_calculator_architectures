@@ -40,12 +40,24 @@ class CalculatorModel extends ChangeNotifier {
 
   void decimalSeparator() => _executeNotify((_) => _addDecimalSeparator());
 
-  void calculate() => _executeNotify((_) => _showResult = true);
+  void calculate() =>
+      _executeNotify((_) => {}, CalculatorButtonSymbol.calculate);
 
 ///////////////
   ///
   ///
   void _executeNotify(void Function(dynamic) action, [dynamic param]) {
+    if (param == CalculatorButtonSymbol.calculate) {
+      if (_calculation.equation.isNotEmpty) {
+        _showResult = true;
+      }
+    } else {
+      if (_showResult && _calculation.equation.isNotEmpty) {
+        _showResult = false;
+        _calculation.reset();
+      }
+    }
+
     action(param);
 
     if (_calculation.equation.isNotEmpty &&
