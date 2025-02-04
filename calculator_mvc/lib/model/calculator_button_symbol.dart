@@ -3,7 +3,9 @@ enum CalculatorButtonSymbol {
   backspace("⌫"),
   percent("%"),
   divide("÷"),
+  divideOperator("/"),
   multiply("×"),
+  multiplyOperator("*"),
   subtract("-"),
   add("+"),
   zero("0"),
@@ -18,6 +20,7 @@ enum CalculatorButtonSymbol {
   nine("9"),
   doubleZero("00"),
   decimalSeparator(","),
+  decimalSeparatorOperator("."),
   calculate("=");
 
   final String label;
