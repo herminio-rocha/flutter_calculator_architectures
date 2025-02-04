@@ -1,6 +1,4 @@
 enum CalculationProperty {
-  equationString,
-  equationValue,
-  resultString,
-  resultValue,
+  equation,
+  result,
 }
