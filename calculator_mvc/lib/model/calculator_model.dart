@@ -12,54 +12,81 @@ class CalculatorModel extends ChangeNotifier {
   String get result => _calculation.result;
   bool get showResult => _showResult;
 
-  void clear() => _executeNotify((_) => _calculation.reset());
+  void clear() => _processCalculationUpdate((_) => _calculation.reset());
 
-  void backspace() => _executeNotify(
+  void backspace() => _processCalculationUpdate(
         (_) => _calculation.updateProperts(
           property: CalculationProperty.equation,
           removeLast: true,
         ),
       );
 
-  void percent() =>
-      _executeNotify((_) => _addOperator(CalculatorButtonSymbol.percent.label));
+  void percent() => _processCalculationUpdate(
+      (_) => _addOperator(CalculatorButtonSymbol.percent.label));
 
-  void divide() =>
-      _executeNotify((_) => _addOperator(CalculatorButtonSymbol.divide.label));
+  void divide() => _processCalculationUpdate(
+      (_) => _addOperator(CalculatorButtonSymbol.divide.label));
 
-  void multiply() => _executeNotify(
+  void multiply() => _processCalculationUpdate(
       (_) => _addOperator(CalculatorButtonSymbol.multiply.label));
 
-  void subtract() => _executeNotify(
+  void subtract() => _processCalculationUpdate(
       (_) => _addOperator(CalculatorButtonSymbol.subtract.label));
 
-  void add() =>
-      _executeNotify((_) => _addOperator(CalculatorButtonSymbol.add.label));
+  void add() => _processCalculationUpdate(
+      (_) => _addOperator(CalculatorButtonSymbol.add.label));
 
-  void inputNumber(String number) => _executeNotify((_) => _addNumber(number));
+  void inputNumber(String number) =>
+      _processCalculationUpdate((_) => _addNumber(number));
 
-  void decimalSeparator() => _executeNotify((_) => _addDecimalSeparator());
+  void decimalSeparator() =>
+      _processCalculationUpdate((_) => _addDecimalSeparator());
 
   void calculate() =>
-      _executeNotify((_) => {}, CalculatorButtonSymbol.calculate);
+      _processCalculationUpdate((_) => {}, CalculatorButtonSymbol.calculate);
 
 ///////////////
   ///
   ///
-  void _executeNotify(void Function(dynamic) action, [dynamic param]) {
+  /// Processa a atualização da expressão e do resultado,
+  /// gerenciando o estado da interface antes de notificar os ouvintes.
+  void _processCalculationUpdate(
+    void Function(dynamic) action, [
+    dynamic param,
+  ]) {
+    _handleShowResultLogic(param); // Gerencia a exibição do resultado
+    action(param); // Executa a ação correspondente ao botão pressionado
+    _updateResultIfNeeded(); // Atualiza o resultado, se necessário
+    notifyListeners(); // Notifica os ouvintes para atualizar a interface
+  }
+
+  /// Gerencia a lógica de exibição do resultado com base no botão pressionado.
+  void _handleShowResultLogic(dynamic param) {
     if (param == CalculatorButtonSymbol.calculate) {
-      if (_calculation.equation.isNotEmpty) {
-        _showResult = true;
-      }
+      _toggleShowResult();
     } else {
-      if (_showResult && _calculation.equation.isNotEmpty) {
-        _showResult = false;
-        _calculation.reset();
-      }
+      _resetIfNewOperation();
     }
+  }
 
-    action(param);
+  /// Alterna a variável `_showResult` para `true` ao calcular um resultado.
+  void _toggleShowResult() {
+    if (_calculation.equation.isNotEmpty) {
+      _showResult = true;
+    }
+  }
 
+  /// Se um novo número ou operação for inserido após um cálculo,
+  /// o estado é reiniciado para permitir uma nova expressão.
+  void _resetIfNewOperation() {
+    if (_showResult && _calculation.equation.isNotEmpty) {
+      _showResult = false;
+      _calculation.reset();
+    }
+  }
+
+  /// Atualiza o resultado da expressão caso a entrada seja válida.
+  void _updateResultIfNeeded() {
     if (_calculation.equation.isNotEmpty &&
         !_isOperator(_getLastCharOperation())) {
       _calculation.updateProperts(
@@ -71,8 +98,6 @@ class CalculatorModel extends ChangeNotifier {
         ),
       );
     }
-
-    notifyListeners();
   }
 
   String _getLastCharOperation() =>
