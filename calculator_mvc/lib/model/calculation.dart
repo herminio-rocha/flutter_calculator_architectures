@@ -1,28 +1,21 @@
 import 'package:calculator_mvc/model/calculation_property.dart';
+import 'package:calculator_mvc/model/calculator_button_symbol.dart';
 
 class Calculation {
-  String _equationString;
-  double _equationValue;
-  String _resultString;
-  double _resultValue;
+  String _equation;
+  String _result;
 
   Calculation()
-      : _equationString = "",
-        _equationValue = 0.0,
-        _resultString = "",
-        _resultValue = 0.0;
+      : _equation = "",
+        _result = "0";
 
-  String get equationString => _equationString;
-  double get equationValue => _equationValue;
-  String get resultString => _resultString;
-  double get resultValue => _resultValue;
+  String get equation => _equation;
+  String get result => _result;
 
   /// Reseta todos os valores da instância de `Calculation` para seus valores iniciais.
   void reset() {
-    _equationString = "";
-    _equationValue = 0.0;
-    _resultString = "0";
-    _resultValue = 0.0;
+    _equation = "";
+    _result = "0";
   }
 
   /// Atualiza uma propriedade específica da `Calculation`, garantindo segurança de tipos.
@@ -37,30 +30,59 @@ class Calculation {
     bool removeLast = false,
   }) {
     switch (property) {
-      case CalculationProperty.equationString:
+      case CalculationProperty.equation:
 
         /// Remove o último caracter
         /// caso equationString não seja vazia
         /// e removeLast = true
-        if (removeLast && equationString.isNotEmpty) {
-          _equationString =
-              equationString.substring(0, equationString.length - 1);
+        if (removeLast && _equation.isNotEmpty) {
+          _equation = _equation.substring(0, _equation.length - 1);
+
+          if (equation.isEmpty) {
+            updateProperts(
+              property: CalculationProperty.result,
+              value: CalculatorButtonSymbol.zero.label,
+            );
+          }
         }
 
         /// Acrescenta um valor a equationString
         if (value is String) {
-          _equationString += value;
+          //_handleInput(equation, value);
+          _equation += value;
         }
         return;
-      case CalculationProperty.equationValue:
-        // TODO: Handle this case.
-        break;
-      case CalculationProperty.resultString:
-        // TODO: Handle this case.
-        break;
-      case CalculationProperty.resultValue:
-        // TODO: Handle this case.
-        break;
+      case CalculationProperty.result:
+        if (value is String) {
+          _result = value;
+        }
+
+        return;
     }
+  }
+
+  String _handleInput(String currentExpression, String newInput) {
+    // Define os operadores matemáticos possíveis
+    final operatorPattern = RegExp(r'[+\-*/÷×]');
+    print(operatorPattern.hasMatch(newInput));
+
+    // Se o novo input for um operador, apenas o adiciona
+    if (operatorPattern.hasMatch(newInput)) {
+      return currentExpression + newInput;
+    }
+
+    // Verifica o número atual na expressão
+    List<String> parts = currentExpression.split(operatorPattern);
+
+    // Verifica o último número (parte da expressão depois do último operador)
+    String lastNumber = parts.isNotEmpty ? parts.last : '';
+
+    // Se o último número tiver 9 caracteres, não permite adicionar mais dígitos
+    if (lastNumber.length >= 9) {
+      return currentExpression; // Retorna a expressão atual sem adicionar o novo número
+    }
+
+    // Se não atingiu o limite, permite adicionar o número
+    return currentExpression + newInput;
   }
 }
