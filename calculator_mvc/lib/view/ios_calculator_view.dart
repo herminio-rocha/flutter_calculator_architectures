@@ -25,7 +25,9 @@ class _IosCalculatorViewState extends State<IosCalculatorView> {
         setState(() {});
       }
     });
+
     _calculatorController = CalculatorController(_calculatorModel);
+
     super.initState();
   }
 
@@ -57,8 +59,10 @@ class _IosCalculatorViewState extends State<IosCalculatorView> {
                                 _calculatorController.equation,
                                 textAlign: TextAlign.end,
                                 style: iosTextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.13,
+                                  fontSize: _calculatorController.showResult
+                                      ? MediaQuery.of(context).size.width * 0.07
+                                      : MediaQuery.of(context).size.width *
+                                          0.13,
                                 ),
                               ),
                             ),
@@ -74,7 +78,9 @@ class _IosCalculatorViewState extends State<IosCalculatorView> {
                     child: Text(
                       _calculatorController.result,
                       style: iosTextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.07,
+                        fontSize: _calculatorController.showResult
+                            ? MediaQuery.of(context).size.width * 0.13
+                            : MediaQuery.of(context).size.width * 0.07,
                       ),
                     ),
                   ),

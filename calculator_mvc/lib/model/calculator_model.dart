@@ -6,9 +6,11 @@ import 'package:flutter/foundation.dart';
 
 class CalculatorModel extends ChangeNotifier {
   final Calculation _calculation = Calculation();
+  bool _showResult = false;
 
   String get equation => _calculation.equation;
   String get result => _calculation.result;
+  bool get showResult => _showResult;
 
   void clear() => _executeNotify((_) => _calculation.reset());
 
@@ -38,7 +40,7 @@ class CalculatorModel extends ChangeNotifier {
 
   void decimalSeparator() => _executeNotify((_) => _addDecimalSeparator());
 
-  void calculate() {}
+  void calculate() => _executeNotify((_) => _showResult = true);
 
 ///////////////
   ///

@@ -55,8 +55,10 @@ class _AndroidCalculatorViewState extends State<AndroidCalculatorView> {
                               child: Text(
                                 _calculatorController.equation,
                                 style: androidTextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.13,
+                                  fontSize: _calculatorController.showResult
+                                      ? MediaQuery.of(context).size.width * 0.07
+                                      : MediaQuery.of(context).size.width *
+                                          0.13,
                                 ),
                               ),
                             )
@@ -72,7 +74,9 @@ class _AndroidCalculatorViewState extends State<AndroidCalculatorView> {
                     child: Text(
                       _calculatorController.result,
                       style: androidTextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.07,
+                        fontSize: _calculatorController.showResult
+                            ? MediaQuery.of(context).size.width * 0.13
+                            : MediaQuery.of(context).size.width * 0.07,
                       ),
                     ),
                   ),

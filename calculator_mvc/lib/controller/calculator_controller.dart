@@ -9,6 +9,8 @@ class CalculatorController {
 
   String get result => _calculatorModel.result;
 
+  bool get showResult => _calculatorModel.showResult;
+
   void clear() => _calculatorModel.clear();
 
   void backspace() => _calculatorModel.backspace();
