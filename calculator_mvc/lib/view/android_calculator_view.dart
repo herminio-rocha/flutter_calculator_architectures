@@ -53,7 +53,7 @@ class _AndroidCalculatorViewState extends State<AndroidCalculatorView> {
                             Directionality(
                               textDirection: TextDirection.ltr,
                               child: Text(
-                                _calculatorController.equationString,
+                                _calculatorController.equation,
                                 style: androidTextStyle(
                                   fontSize:
                                       MediaQuery.of(context).size.width * 0.13,
@@ -70,7 +70,7 @@ class _AndroidCalculatorViewState extends State<AndroidCalculatorView> {
                     scrollDirection: Axis.horizontal,
                     reverse: true,
                     child: Text(
-                      _calculatorController.resultString,
+                      _calculatorController.result,
                       style: androidTextStyle(
                         fontSize: MediaQuery.of(context).size.width * 0.07,
                       ),

@@ -54,7 +54,7 @@ class _IosCalculatorViewState extends State<IosCalculatorView> {
                             Directionality(
                               textDirection: TextDirection.ltr,
                               child: Text(
-                                _calculatorController.equationString,
+                                _calculatorController.equation,
                                 textAlign: TextAlign.end,
                                 style: iosTextStyle(
                                   fontSize:
@@ -72,7 +72,7 @@ class _IosCalculatorViewState extends State<IosCalculatorView> {
                     scrollDirection: Axis.horizontal,
                     reverse: true,
                     child: Text(
-                      _calculatorController.resultString,
+                      _calculatorController.result,
                       style: iosTextStyle(
                         fontSize: MediaQuery.of(context).size.width * 0.07,
                       ),
