@@ -1,21 +1,20 @@
 import 'package:calculator_mvc/model/calculation.dart';
 import 'package:calculator_mvc/model/calculation_property.dart';
 import 'package:calculator_mvc/model/calculator_button_symbol.dart';
+import 'package:calculator_mvc/util/math_expression_processor.dart';
 import 'package:flutter/foundation.dart';
 
 class CalculatorModel extends ChangeNotifier {
   final Calculation _calculation = Calculation();
 
-  String get equationString => _calculation.equationString;
-  double get equationValue => _calculation.equationValue;
-  String get resultString => _calculation.resultString;
-  double get resultValue => _calculation.resultValue;
+  String get equation => _calculation.equation;
+  String get result => _calculation.result;
 
   void clear() => _executeNotify((_) => _calculation.reset());
 
   void backspace() => _executeNotify(
         (_) => _calculation.updateProperts(
-          property: CalculationProperty.equationString,
+          property: CalculationProperty.equation,
           removeLast: true,
         ),
       );
@@ -46,17 +45,29 @@ class CalculatorModel extends ChangeNotifier {
   ///
   void _executeNotify(void Function(dynamic) action, [dynamic param]) {
     action(param);
+
+    if (_calculation.equation.isNotEmpty &&
+        !_isOperator(_getLastCharOperation())) {
+      _calculation.updateProperts(
+        property: CalculationProperty.result,
+        value: _removeTrailingZeros(
+          MathExpressionProcessor.solveExpression(
+            _normalizeExpression(),
+          ),
+        ),
+      );
+    }
+
     notifyListeners();
   }
 
-  bool _isValidExpression(String expression) {
-    final regex = RegExp(r'^(?:\d+|\d+,\d*)?(?:[+\-×÷](?:\d+|\d+,\d*)?)*$');
-    return regex.hasMatch(expression);
-  }
-
   String _getLastCharOperation() =>
-      _calculation.equationString[_calculation.equationString.length - 1];
+      _calculation.equation[_calculation.equation.length - 1];
 
+  String _removeTrailingZeros(String value) =>
+      value.replaceAll(RegExp(r'([.]*0+)$'), '');
+
+  /// Obtém o último número da expressão
   String _getLastNumber() {
     final operators = [
       CalculatorButtonSymbol.add.label,
@@ -67,8 +78,8 @@ class CalculatorModel extends ChangeNotifier {
     String lastNumber = '';
 
     // Itera a string de trás para frente
-    for (int i = _calculation.equationString.length - 1; i >= 0; i--) {
-      final char = _calculation.equationString[i];
+    for (int i = _calculation.equation.length - 1; i >= 0; i--) {
+      final char = _calculation.equation[i];
       if (operators.contains(char)) {
         // Encontrou um operador, para a iteração
         break;
@@ -79,91 +90,169 @@ class CalculatorModel extends ChangeNotifier {
     return lastNumber;
   }
 
-  bool _isOperator(String char) {
-    return [
-      CalculatorButtonSymbol.add.label,
-      CalculatorButtonSymbol.subtract.label,
-      CalculatorButtonSymbol.multiply.label,
-      CalculatorButtonSymbol.divide.label,
-      CalculatorButtonSymbol.percent.label,
-    ].contains(char);
+  /// Retorna o último operador encontrado na expressão
+  String _getLastOperator(String expression) {
+    // Define os operadores matemáticos possíveis
+    final operatorPattern = RegExp(r'[+\-*/]');
+
+    // Encontra todos os operadores na expressão
+    final matches = operatorPattern.allMatches(expression);
+
+    // Retorna o último operador encontrado
+    return matches.isNotEmpty ? matches.last.group(0)! : '';
   }
 
-  bool _isDecimalSeparator(String char) =>
-      char == CalculatorButtonSymbol.decimalSeparator.label;
+  bool _isOperator(String char) => [
+        CalculatorButtonSymbol.add.label,
+        CalculatorButtonSymbol.subtract.label,
+        CalculatorButtonSymbol.multiply.label,
+        CalculatorButtonSymbol.divide.label,
+        CalculatorButtonSymbol.percent.label,
+      ].contains(char);
 
-  bool _isNumeric(String char) => double.tryParse(char) != null;
+  /// Substitui `÷` pelo operador aceito `/`
+  /// Substitui `×` pelo operador aceito `*`
+  /// Substitui `,` pelo operador aceito `.`
+  /// Substitui `%` por sua forma decimal (ex: "20%" → "(20*0.01)")
+  String _normalizeExpression() => _calculation.equation
+      .replaceAll(
+        CalculatorButtonSymbol.divide.label,
+        CalculatorButtonSymbol.divideOperator.label,
+      )
+      .replaceAll(
+        CalculatorButtonSymbol.multiply.label,
+        CalculatorButtonSymbol.multiplyOperator.label,
+      )
+      .replaceAll(
+        CalculatorButtonSymbol.decimalSeparator.label,
+        CalculatorButtonSymbol.decimalSeparatorOperator.label,
+      )
+      .replaceAllMapped(
+        RegExp(r'(\d*\.?\d+)%'),
+        (match) => '(${match[1]}*0.01)',
+      );
 
-  bool _isValidMultipleZeros(String number) {
-    // Verifica se o número contém apenas zeros válidos
-    if (number == "0") return true; // Apenas um zero é válido
+  // Retorna a expressao com o calculo existente antes do
+  // ultimo numero e operador
+  String _extractExpressionBeforeLastOperator(String expression) {
+    // Encontra a última ocorrência de um operador
+    RegExp regex = RegExp(r'[\+\-\*/%](?=[^+\-*/%]*$)');
+    Match? match = regex.firstMatch(expression);
 
-    // Verifica se há múltiplos zeros no início ou no final
-    if (number.startsWith("0") && !number.contains(',')) {
-      // Números como "0001" são inválidos
-      return false;
+    if (match != null) {
+      return expression.substring(0, match.end - 1);
     }
 
-    // Verifica se há múltiplos zeros após a vírgula
-    if (number.contains(',')) {
-      final parts = number.split(',');
-      if (parts[1].isEmpty || parts[1].replaceAll('0', '').isEmpty) {
-        // Números como "0,000" ou "1,0000" são válidos
-        return true;
-      }
-    }
+    return expression;
+  }
 
-    return true;
+  /// Converte o valor percentual para sua forma decimal
+  String _convertPercentageToDecimal(String expression) => _removeTrailingZeros(
+      ((double.tryParse(expression) ?? 0.0) / 100).toStringAsPrecision(9));
+
+  /// Resolve a porcentagem, realizando a conversão e cálculos conforme necessário
+  String _solvePercente() {
+    String percentValue = _getLastNumber();
+    String formattedExpression = _normalizeExpression();
+    String lastOperator = _getLastOperator(formattedExpression);
+    String partialExpression =
+        _extractExpressionBeforeLastOperator(formattedExpression);
+    String partialResult =
+        MathExpressionProcessor.solveExpression(partialExpression);
+    String percentDecimalValue = _convertPercentageToDecimal(percentValue);
+
+    /// Aplica a porcentagem dependendo do operador anterior
+    return lastOperator == CalculatorButtonSymbol.multiplyOperator.label ||
+            lastOperator == CalculatorButtonSymbol.divideOperator.label ||
+            lastOperator.isEmpty
+        ? percentDecimalValue
+        : _removeTrailingZeros(((double.tryParse(partialResult) ?? 0.0) *
+                (double.tryParse(percentDecimalValue) ?? 0.0))
+            .toStringAsPrecision(9));
   }
 
   void _addOperator(String operator) {
-    // Antes de adicionar um operador equationString,
+    // Antes de adicionar um operador equation,
     // é preciso garantir que a última entrada não seja outro operador.
     // Isso evita entradas inválidas, como ++, ÷x, ou %+.
-    if (_calculation.equationString.isNotEmpty) {
+    if (_calculation.equation.isNotEmpty) {
+      // Validações para o operador `%`
+      if (operator == CalculatorButtonSymbol.percent.label) {
+        // Caso o ultimo caracter seja um operador
+        // Nao permite adicionar `%` a expressao
+        if (_isOperator(_getLastCharOperation())) {
+          return;
+        }
+
+        /// Faz os calculos para definir valor da porcentagem
+        String percent = _solvePercente();
+
+        for (var _ in _getLastNumber().split('')) {
+          _calculation.updateProperts(
+              property: CalculationProperty.equation, removeLast: true);
+        }
+
+        _calculation.updateProperts(
+          property: CalculationProperty.equation,
+          value: percent,
+        );
+
+        return;
+      }
+
       // Se o último caracter digitado não for um operador
-      // insere o operador a equationString
+      // insere o operador a equation
       if (!_isOperator(_getLastCharOperation())) {
         _calculation.updateProperts(
-          property: CalculationProperty.equationString,
+          property: CalculationProperty.equation,
           value: operator,
         );
       } else {
         // Caso o ultimo digito seja um operador,
         // apenas o substitui pelo novo
-        if (!_calculation.equationString
+        if (!_calculation.equation
             .endsWith(CalculatorButtonSymbol.decimalSeparator.label)) {
           _calculation
             ..updateProperts(
-                property: CalculationProperty.equationString, removeLast: true)
+                property: CalculationProperty.equation, removeLast: true)
             ..updateProperts(
-              property: CalculationProperty.equationString,
+              property: CalculationProperty.equation,
               value: operator,
             );
         }
       }
-    } else if (operator == CalculatorButtonSymbol.subtract.label) {
-      // Permite que o primeiro caractere seja um sinal negativo
-      _calculation.updateProperts(
-        property: CalculationProperty.equationString,
-        value: operator,
-      );
+    } else
+
+    /// Se a equação estiver vazia
+    /// acrescenta um 0 antes do operador
+    /// para tornar a equação valida
+    {
+      if (operator != CalculatorButtonSymbol.percent.label) {
+        _calculation
+          ..updateProperts(
+            property: CalculationProperty.equation,
+            value: CalculatorButtonSymbol.zero.label,
+          )
+          ..updateProperts(
+            property: CalculationProperty.equation,
+            value: operator,
+          );
+      }
     }
   }
 
   void _addDecimalSeparator() {
-    /// Se equationString estiver vazio inicia com 0,
+    /// Se equation estiver vazio inicia com 0,
     /// OU
     /// Se o ultimo caracter for um operador adiciona 0,
-    if (_calculation.equationString.isEmpty ||
-        _isOperator(_getLastCharOperation())) {
+    if (_calculation.equation.isEmpty || _isOperator(_getLastCharOperation())) {
       _calculation
         ..updateProperts(
-          property: CalculationProperty.equationString,
+          property: CalculationProperty.equation,
           value: CalculatorButtonSymbol.zero.label,
         )
         ..updateProperts(
-          property: CalculationProperty.equationString,
+          property: CalculationProperty.equation,
           value: CalculatorButtonSymbol.decimalSeparator.label,
         );
 
@@ -181,7 +270,7 @@ class CalculatorModel extends ChangeNotifier {
     /// entao pode adicionar ','
     /// atribui um valor inicial
     _calculation.updateProperts(
-      property: CalculationProperty.equationString,
+      property: CalculationProperty.equation,
       value: CalculatorButtonSymbol.decimalSeparator.label,
     );
   }
@@ -190,14 +279,14 @@ class CalculatorModel extends ChangeNotifier {
     /// Validação para 00
     if (number == CalculatorButtonSymbol.doubleZero.label) {
       /// Validação para ignorar múltiplos zeros no início
-      if (_calculation.equationString == CalculatorButtonSymbol.zero.label) {
+      if (_calculation.equation == CalculatorButtonSymbol.zero.label) {
         return;
       }
 
       /// Se a expressão estiver vazia, inicia com 0
-      if (_calculation.equationString.isEmpty) {
+      if (_calculation.equation.isEmpty) {
         _calculation.updateProperts(
-          property: CalculationProperty.equationString,
+          property: CalculationProperty.equation,
           value: CalculatorButtonSymbol.zero.label,
         );
         return;
@@ -206,7 +295,7 @@ class CalculatorModel extends ChangeNotifier {
       /// Se o último caractere for um operador, adiciona "0" em vez de "00"
       if (_isOperator(_getLastCharOperation())) {
         _calculation.updateProperts(
-          property: CalculationProperty.equationString,
+          property: CalculationProperty.equation,
           value: CalculatorButtonSymbol.zero.label,
         );
         return;
@@ -219,17 +308,17 @@ class CalculatorModel extends ChangeNotifier {
 
       // Adiciona "00" normalmente
       _calculation.updateProperts(
-        property: CalculationProperty.equationString,
+        property: CalculationProperty.equation,
         value: CalculatorButtonSymbol.doubleZero.label,
       );
     } else {
       // Validação para outros números
       // ------------------------------
-      // Caso equationString seja igual a 0
+      // Caso equation seja igual a 0
       // substitui 0 pelo numero digitado
-      if (_calculation.equationString == CalculatorButtonSymbol.zero.label) {
+      if (_calculation.equation == CalculatorButtonSymbol.zero.label) {
         _calculation.updateProperts(
-          property: CalculationProperty.equationString,
+          property: CalculationProperty.equation,
           value: number,
         );
         return;
@@ -240,19 +329,19 @@ class CalculatorModel extends ChangeNotifier {
       if (_getLastNumber() == CalculatorButtonSymbol.zero.label) {
         _calculation
           ..updateProperts(
-            property: CalculationProperty.equationString,
+            property: CalculationProperty.equation,
             value: CalculatorButtonSymbol.zero.label,
           )
           ..updateProperts(
-              property: CalculationProperty.equationString, value: number);
+              property: CalculationProperty.equation, value: number);
 
         return;
       }
 
       /// Se não atender nenhuma regra
-      /// adiciona o numero a equationString
+      /// adiciona o numero a equation
       _calculation.updateProperts(
-        property: CalculationProperty.equationString,
+        property: CalculationProperty.equation,
         value: number,
       );
     }
