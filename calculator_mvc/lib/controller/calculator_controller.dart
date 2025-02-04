@@ -5,9 +5,9 @@ class CalculatorController {
 
   CalculatorController(this._calculatorModel);
 
-  String get equationString => _calculatorModel.equationString;
+  String get equation => _calculatorModel.equation;
 
-  String get resultString => _calculatorModel.resultString;
+  String get result => _calculatorModel.result;
 
   void clear() => _calculatorModel.clear();
 
