@@ -3,6 +3,9 @@ import 'package:calculator_mvc/controller/calculator_controller.dart';
 import 'package:calculator_mvc/model/calculator_button_category.dart';
 import 'package:flutter/material.dart';
 
+/// Define a configuração dos botões da calculadora, incluindo texto, categoria e ações.
+///
+/// Defines the configuration of calculator buttons, including label, category, and actions.
 class CalculatorButtonConfig {
   final String label;
   final CalculatorButtonCategory category;
@@ -10,7 +13,10 @@ class CalculatorButtonConfig {
 
   const CalculatorButtonConfig(this.label, this.category, this.onPressed);
 
-  // Função para obter as cores com base no sistema operacional e no tipo do botão
+  /// Métodos para obter as cores baseadas no sistema operacional e no tipo do botão.
+  ///
+  /// Methods for getting colors based on operating system and button type.
+
   Color get textColor {
     if (Platform.isAndroid) {
       return _getAndroidTextColor();
@@ -41,9 +47,10 @@ class CalculatorButtonConfig {
     }
   }
 
-  // Funções para obter as cores baseadas no sistema operacional e no tipo do botão
+  /// Cores específicas para Sistema Android.
+  ///
+  /// Specific colors for Android system.
 
-  // Cores específicas para Android
   Color _getAndroidTextColor() {
     switch (category) {
       case CalculatorButtonCategory.number:
@@ -89,7 +96,10 @@ class CalculatorButtonConfig {
     }
   }
 
-  // Cores específicas para iOS
+  /// Cores específicas para sistema iOS.
+  ///
+  ///Specific colors for iOS system.
+
   Color _getIosTextColor() {
     switch (category) {
       case CalculatorButtonCategory.number:

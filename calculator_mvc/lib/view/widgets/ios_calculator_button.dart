@@ -3,6 +3,9 @@ import 'package:calculator_mvc/model/calculator_button_config.dart';
 import 'package:calculator_mvc/view/widgets/ios_text_style.dart';
 import 'package:flutter/cupertino.dart';
 
+/// UI de um botão estilizado da calculadora para sistema iOS.
+///
+/// UI of a styled calculator button for iOS system.
 class IosCalculatorButton extends StatelessWidget {
   final CalculatorButtonConfig buttonConfig;
   final CalculatorController calculatorController;
@@ -16,23 +19,23 @@ class IosCalculatorButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(100), // Borda arredondada
+      borderRadius: BorderRadius.circular(100),
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: buttonConfig.backgroundColor, // Cor de fundo
-          borderRadius: BorderRadius.circular(100), // Borda arredondada
+          color: buttonConfig.backgroundColor,
+          borderRadius: BorderRadius.circular(100),
           border: Border.all(
-            color: buttonConfig.borderColor, // Cor da borda
-            width: 2, // Espessura da borda
+            color: buttonConfig.borderColor,
+            width: 2,
           ),
         ),
         child: CupertinoButton(
           onPressed: () => buttonConfig.onPressed(calculatorController),
           padding: EdgeInsets.zero,
-          minSize: 70, // Tamanho mínimo do botão
+          minSize: 70,
           child: SizedBox(
-            width: 70, // Largura fixa do botão
-            height: 70, // Altura fixa do botão
+            width: 70,
+            height: 70,
             child: Center(
               child: Text(
                 buttonConfig.label,

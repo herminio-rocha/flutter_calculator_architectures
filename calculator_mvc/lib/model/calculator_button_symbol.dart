@@ -1,3 +1,6 @@
+/// Representa todos os símbolos de botões da calculadora usados no aplicativo.
+///
+/// Represents all calculator button symbols used in the application.
 enum CalculatorButtonSymbol {
   clear("c"),
   backspace("⌫"),
