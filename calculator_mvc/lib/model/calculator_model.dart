@@ -1,8 +1,13 @@
+import 'dart:ui';
+
+import 'package:calculator_mvc/helper/localization_helper.dart';
+import 'package:calculator_mvc/helper/localization_keys.dart';
 import 'package:calculator_mvc/model/calculation.dart';
 import 'package:calculator_mvc/model/calculation_property.dart';
 import 'package:calculator_mvc/model/calculator_button_symbol.dart';
 import 'package:calculator_mvc/util/math_equation_processor.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:ui' as ui;
 
 /// [CalculatorModel] gerencia o estado e a lógica da aplicação da calculadora,
 /// seguindo o padrão MVC.
@@ -114,14 +119,30 @@ class CalculatorModel extends ChangeNotifier {
   void _updateResultIfNeeded() {
     if (_calculation.equation.isNotEmpty &&
         !_isMathOperator(_getLastCharOperation())) {
-      _calculation.updateProperties(
-        property: CalculationProperty.result,
-        value: _removeTrailingZeros(
-          MathEquationProcessor.solveEquation(
-            _normalizeEquation(),
+      /// Verifica se existe divisão por zero.
+      ///
+      /// Check if there is division by zero.
+      if (_containsDivisionByZero(_normalizeEquation())) {
+        _calculation.updateProperties(
+          property: CalculationProperty.result,
+          value: LocalizationHelper.getMessage(
+            LocalizationKeys.errorDivisionByZero,
+            ui.PlatformDispatcher.instance.locale,
           ),
-        ),
-      );
+        );
+      } else {
+        /// Prossegue com o cálculo se nenhuma divisão por zero for encontrada.
+        ///
+        /// Proceed with calculation if no division by zero is found.
+        _calculation.updateProperties(
+          property: CalculationProperty.result,
+          value: _removeTrailingZeros(
+            MathEquationProcessor.solveEquation(
+              _normalizeEquation(),
+            ),
+          ),
+        );
+      }
     }
   }
 
@@ -258,6 +279,15 @@ class CalculatorModel extends ChangeNotifier {
   /// Métodos auxiliares que realizam tarefas específicas e repetitivas.
   ///
   /// Auxiliary methods that perform specific and repetitive tasks.
+
+  /// Verifica se a expressão contém uma divisão por zero.
+  ///
+  /// Checks if the expression contains a division by zero.
+  bool _containsDivisionByZero(String expression) {
+    // Regex to find patterns like "/0", "/0.0", "/0.000", etc.
+    final divisionByZeroPattern = RegExp(r'\/\s*0(\.0*)?([^\.\d]|$)');
+    return divisionByZeroPattern.hasMatch(expression);
+  }
 
   /// Gerencia a lógica a ser aplicada para o operador matemático `%`.
   ///
