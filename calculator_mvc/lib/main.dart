@@ -5,9 +5,23 @@ import 'package:calculator_mvc/view/android_calculator_view.dart';
 import 'package:calculator_mvc/view/ios_calculator_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-void main() {
+void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  Future.delayed(
+      const Duration(
+        seconds: 1,
+      ), () {
+    FlutterNativeSplash.remove();
+  });
+
   runApp(const MyApp());
 }
 
@@ -37,6 +51,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.grey,
             ),
+            debugShowCheckedModeBanner: false,
             supportedLocales: supportedLocales,
             localizationsDelegates: localizationsDelegates,
             locale: locale,
@@ -46,6 +61,7 @@ class MyApp extends StatelessWidget {
             title: "Flutter Calculator",
             theme: const CupertinoThemeData(
                 primaryColor: CupertinoColors.systemGrey),
+            debugShowCheckedModeBanner: false,
             supportedLocales: supportedLocales,
             localizationsDelegates: localizationsDelegates,
             locale: locale,
