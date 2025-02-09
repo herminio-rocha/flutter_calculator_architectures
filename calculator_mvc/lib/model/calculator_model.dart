@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:calculator_mvc/helper/localization_helper.dart';
 import 'package:calculator_mvc/helper/localization_keys.dart';
 import 'package:calculator_mvc/model/calculation.dart';

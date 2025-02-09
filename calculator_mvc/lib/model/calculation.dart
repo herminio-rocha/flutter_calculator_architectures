@@ -62,13 +62,31 @@ class Calculation {
         if (value is String) {
           _equation += value;
         }
+
+        updateLabelDecimalSeparatorForShowInDisplay(property);
+
         return;
       case CalculationProperty.result:
         if (value is String) {
           _result = value;
         }
 
+        updateLabelDecimalSeparatorForShowInDisplay(property);
+
         return;
     }
+  }
+
+  void updateLabelDecimalSeparatorForShowInDisplay(
+      CalculationProperty property) {
+    property == CalculationProperty.equation
+        ? _equation = _equation.replaceAll(
+            CalculatorButtonSymbol.decimalSeparatorOperator.label,
+            CalculatorButtonSymbol.decimalSeparator.label,
+          )
+        : _result = _result.replaceAll(
+            CalculatorButtonSymbol.decimalSeparatorOperator.label,
+            CalculatorButtonSymbol.decimalSeparator.label,
+          );
   }
 }
