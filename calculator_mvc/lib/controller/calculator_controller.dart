@@ -1,4 +1,6 @@
+import 'package:calculator_mvc/model/calculator_button_config.dart';
 import 'package:calculator_mvc/model/calculator_model.dart';
+import 'package:calculator_mvc/repository/calculator_button_config_repository.dart';
 
 /// Controlador responsável por gerenciar interações do usuário e
 /// encaminhá-las ao [CalculatorModel].
@@ -11,10 +13,21 @@ class CalculatorController {
   /// The model class that holds the business logic of the calculator.
   final CalculatorModel _calculatorModel;
 
+  /// Classe que define a configuração para os botões da calculadora.
+  ///
+  /// Class hat defines the configuration for calculator buttons.
+  final CalculatorButtonConfigRepository _buttonRepository =
+      CalculatorButtonConfigRepository();
+
   /// Inicializa o controlador com o classe model fornecid.
   ///
   /// Initializes the controller with the given model class.
   CalculatorController(this._calculatorModel);
+
+  /// Método que retorna lista de configurações de botões.
+  ///
+  /// Method that returns list of button configurations.
+  List<CalculatorButtonConfig> get buttons => _buttonRepository.getButtons();
 
   /// Retorna a string da equação atual.
   ///
