@@ -63,7 +63,7 @@ class Calculation {
           _equation += value;
         }
 
-        updateLabelDecimalSeparatorForShowInDisplay(property);
+        _updateLabelDecimalSeparatorForShowInDisplay(property);
 
         return;
       case CalculationProperty.result:
@@ -71,13 +71,13 @@ class Calculation {
           _result = value;
         }
 
-        updateLabelDecimalSeparatorForShowInDisplay(property);
+        _updateLabelDecimalSeparatorForShowInDisplay(property);
 
         return;
     }
   }
 
-  void updateLabelDecimalSeparatorForShowInDisplay(
+  void _updateLabelDecimalSeparatorForShowInDisplay(
       CalculationProperty property) {
     property == CalculationProperty.equation
         ? _equation = _equation.replaceAll(
