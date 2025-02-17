@@ -139,6 +139,18 @@ O objetivo é oferecer um estudo comparativo e prático, aplicando boas prática
 </ul>
 
 <br>
+<h3>Decisões Técnicas Comuns às Arquiteturas</h3>
+<p>Independentemente da arquitetura utilizada (MVC, MVVM ou MVI), algumas decisões foram aplicadas de maneira padrão para garantir organização, reutilização de código e boas práticas:</p>
+<ul>
+  <li>Uso de uma camada Repository como única fonte de entrada dos dados</li>
+  <ul><li>A Repository gerencia as configurações e comportamentos dos botões da calculadora, garantindo um ponto centralizado.</li></ul>
+  <li>Separação das Views por plataforma (Android e iOS)</li>
+  <ul><li>Foram criados arquivos distintos para cada sistema operacional, mantendo a mesma lógica compartilhada, reforçando o desacoplamento entre UI e lógica de negócios.</li></ul>
+  <li>Boas práticas e padrões</li>
+  <ul><li>Embora o foco seja o estudo das arquiteturas, foram seguidos princípios como modularidade, organização de código e separação de responsabilidades, tornando o código mais profissional e legível.</li></ul>
+</ul>
+
+<br>
 <h2>🚀 Como Explorar e Executar o Projeto</h2>
 <p>Este projeto foi desenvolvido para ser simples de explorar e executar. Para começar, siga as instruções abaixo:</p>
 
@@ -200,7 +212,7 @@ The goal is to offer a comparative and practical study, applying best practices 
 <h2>📚 Case Study</h2>
 <p>For this study, we chose to implement a calculator because it is an application that:</p>
 <ul>
-  <li><strong>Easy to understand</strong> → → Has a minimalist UI and straightforward logic.</li>
+  <li><strong>Easy to understand</strong> → Has a minimalist UI and straightforward logic.</li>
   <li><strong>Common in technical tests</strong> → Many interviews use small challenges like this to evaluate best practices.</li>
   <li><strong>Great for demonstrating architectural patterns</strong> → Despite being simple, it involves separation of concerns, UI reactivity, and data processing.</li>
 </ul>
@@ -323,6 +335,18 @@ Each architecture has its own characteristics, such as folder organization and s
 <ul>
     <li><strong>lib</strong>: The project's source code, including the implementation of each architecture.</li>
     <li><strong>assets</strong>: Resource files, such as images and icons.</li>
+</ul>
+
+<br>
+<h3>Common Technical Decisions Across Architectures</h3>
+<p>Regardless of the chosen architecture (MVC, MVVM, or MVI), some design decisions were applied consistently to ensure organization, code reusability, and best practices:</p>
+<ul>
+  <li>Use of a Repository Layer as the Single Source of Truth</li>
+  <ul><li>The Repository manages the calculator button configurations and behaviors, providing a centralized access point for data management.</li></ul>
+  <li>Separation of Views by Platform (Android & iOS)</li>
+  <ul><li>Dedicated files were created for each operating system while maintaining shared logic, reinforcing the decoupling between UI and business logic.</li></ul>
+  <li>Best Practices & Development Standards</li>
+  <ul><li>Although the primary focus is on studying architectures, principles such as modularity, code organization, and separation of concerns were followed, ensuring a more professional and readable codebase.</li></ul>
 </ul>
 
 <br>
