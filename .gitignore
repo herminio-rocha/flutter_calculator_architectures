@@ -63,15 +63,28 @@ app.*.map.json
 **/calculator_mvvm/.pub/
 **/calculator_mvvm/build/
 
+**/calculator_mvi/**/doc/api/
+**/calculator_mvi/**/ios/Flutter/.last_build_id
+**/calculator_mvi/.dart_tool/
+**/calculator_mvi/.flutter-plugins
+**/calculator_mvi/.flutter-plugins-dependencies
+**/calculator_mvi/.pub-cache/
+**/calculator_mvi/.pub/
+**/calculator_mvi/build/
+
 # Symbolication related
 **/calculator_mvc/app.*.symbols
 
 **/calculator_mvvm/app.*.symbols
 
+**/calculator_mvi/app.*.symbols
+
 # Obfuscation related
 **/calculator_mvc/app.*.map.json
 
 **/calculator_mvvm/app.*.map.json
+
+**/calculator_mvi/app.*.map.json
 
 # Android Studio will place build artifacts here
 **/calculator_mvc/android/app/debug
@@ -81,3 +94,7 @@ app.*.map.json
 **/calculator_mvvm/android/app/debug
 **/calculator_mvvm/android/app/profile
 **/calculator_mvvm/android/app/release
+
+**/calculator_mvi/android/app/debug
+**/calculator_mvi/android/app/profile
+**/calculator_mvi/android/app/release
