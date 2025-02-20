@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Define o estilo de texto para os componentes da calculadora no sistema Android.
-///
-/// Defines the text style for Android system calculator components.
 TextStyle androidTextStyle({
   String fontFamily = 'Roboto',
   double fontSize = 36,

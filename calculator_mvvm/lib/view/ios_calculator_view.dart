@@ -6,9 +6,6 @@ import 'package:provider/provider.dart';
 
 import 'widgets/ios_calculator_button.dart';
 
-/// Representa a interface do usuário da calculadora no Sistema IOS.
-///
-/// AndroidCalculatorView represents the UI for the calculator on IOS System.
 class IosCalculatorView extends StatefulWidget {
   const IosCalculatorView({super.key});
 
@@ -37,9 +34,6 @@ class _IosCalculatorViewState extends State<IosCalculatorView> {
     );
   }
 
-  /// Constrói a seção do visor da calculadora.
-  ///
-  /// Builds the calculator display section.
   Widget _buildDisplay(double screenWidth, CalculatorViewModel viewModel) {
     return Expanded(
       flex: 1,
@@ -93,9 +87,6 @@ class _IosCalculatorViewState extends State<IosCalculatorView> {
     );
   }
 
-  /// Constrói o teclado da calculadora com botões.
-  ///
-  /// Builds the calculator keypad with buttons.
   Widget _buildKeypad(
       double screenWidth, double screenHeight, CalculatorViewModel viewModel) {
     return Expanded(

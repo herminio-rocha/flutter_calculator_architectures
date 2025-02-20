@@ -3,9 +3,6 @@ import 'package:calculator_mvvm/view/widgets/ios_text_style.dart';
 import 'package:calculator_mvvm/viewmodel/calculator_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 
-/// UI de um botão estilizado da calculadora para sistema iOS.
-///
-/// UI of a styled calculator button for iOS system.
 class IosCalculatorButton extends StatelessWidget {
   final CalculatorButtonConfig buttonConfig;
   final CalculatorViewModel calculatorViewModel;

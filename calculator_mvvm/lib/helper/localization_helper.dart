@@ -2,9 +2,6 @@ import 'dart:ui';
 
 import 'package:calculator_mvvm/helper/localization_keys.dart';
 
-/// Classe responsável por fornecer mensagens localizadas de acordo com o idioma do dispositivo.
-///
-/// Class responsible for providing localized messages according to the device language.
 class LocalizationHelper {
   static final Map<String, Map<String, String>> _messages = {
     'en': {

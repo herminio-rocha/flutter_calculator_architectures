@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Define o estilo de texto para os componentes da calculadora no sistema iOS.
-///
-/// Defines the text style for iOSS system calculator components.
 TextStyle iosTextStyle({
   String fontFamily = '.SF Pro Text',
   double fontSize = 40,

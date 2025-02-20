@@ -2,13 +2,7 @@ import 'package:calculator_mvvm/model/calculator_button_category.dart';
 import 'package:calculator_mvvm/model/calculator_button_config.dart';
 import 'package:calculator_mvvm/model/calculator_button_symbol.dart';
 
-/// Repositório que define a configuração para todos os botões da calculadora.
-///
-/// Repository that defines the configuration for all calculator buttons.
 class CalculatorButtonConfigRepository {
-  /// Método que retorna lista de configurações de botões, associando símbolos, categorias e ações.
-  ///
-  /// Method that returns list of button configurations, associating symbols, categories, and actions.
   List<CalculatorButtonConfig> getButtons() => [
         CalculatorButtonConfig(
           CalculatorButtonSymbol.clear.label,

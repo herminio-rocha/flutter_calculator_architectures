@@ -4,9 +4,6 @@ import 'package:calculator_mvvm/viewmodel/calculator_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-/// Representa a interface do usuário da calculadora no Sistema Android.
-///
-/// AndroidCalculatorView represents the UI for the calculator on Android System.
 class AndroidCalculatorView extends StatefulWidget {
   const AndroidCalculatorView({super.key});
 
@@ -35,9 +32,6 @@ class _AndroidCalculatorViewState extends State<AndroidCalculatorView> {
     );
   }
 
-  /// Constrói a seção do visor da calculadora.
-  ///
-  /// Builds the calculator display section.
   Widget _buildDisplay(double screenWidth, CalculatorViewModel viewModel) {
     return Expanded(
       flex: 1,
@@ -90,9 +84,6 @@ class _AndroidCalculatorViewState extends State<AndroidCalculatorView> {
     );
   }
 
-  /// Constrói o teclado da calculadora com botões.
-  ///
-  /// Builds the calculator keypad with buttons.
   Widget _buildKeypad(
       double screenWidth, double screenHeight, CalculatorViewModel viewModel) {
     return Expanded(
