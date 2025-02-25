@@ -36,8 +36,8 @@ Este projeto faz parte do repositório Flutter Calculator Architectures, onde di
       </tr>
       <tr>
         <td align="center">Controller</td>
-        <td align="center"">Faz a ponte entre Model e View, processando entradas do usuário.</td>
-        <td align="center""><i>CalculatorController</i></td>
+        <td align="center">Faz a ponte entre Model e View, processando entradas do usuário.</td>
+        <td align="center"><i>CalculatorController</i></td>
       </tr>
     </tbody>
   </table>
@@ -81,7 +81,7 @@ Este projeto faz parte do repositório Flutter Calculator Architectures, onde di
   <li><strong>lib/controller/</strong>: Lógica intermediária entre Model e View.</li>
   <li><strong>lib/repository/</strong>: Centraliza a configuração dos botões da calculadora.</li>
   <li><strong>lib/util: </strong>: Classes utilitárias.</li>
-  <li><strong>lib/util: </strong>: Classes helper.</li>
+  <li><strong>lib/helper: </strong>: Classes helper.</li>
 </ul>
 
 
@@ -128,8 +128,8 @@ This project is part of the Flutter Calculator Architectures repository, where d
       </tr>
       <tr>
         <td align="center">Controller</td>
-        <td align="center"">Acts as a bridge between the Model and View, processing user inputs.</td>
-        <td align="center""><i>CalculatorController</i></td>
+        <td align="center">Acts as a bridge between the Model and View, processing user inputs.</td>
+        <td align="center"><i>CalculatorController</i></td>
       </tr>
     </tbody>
   </table>
