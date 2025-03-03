@@ -83,8 +83,8 @@ class _IosCalculatorViewState extends State<IosCalculatorView> {
                           textAlign: TextAlign.end,
                           style: iosTextStyle(
                             fontSize: _calculatorController.showResult
-                                ? MediaQuery.of(context).size.width * 0.07
-                                : MediaQuery.of(context).size.width * 0.13,
+                                ? screenWidth * 0.07
+                                : screenWidth * 0.13,
                           ),
                         ),
                       ),
@@ -101,8 +101,8 @@ class _IosCalculatorViewState extends State<IosCalculatorView> {
                 _calculatorController.result,
                 style: iosTextStyle(
                   fontSize: _calculatorController.showResult
-                      ? MediaQuery.of(context).size.width * 0.13
-                      : MediaQuery.of(context).size.width * 0.07,
+                      ? screenWidth * 0.13
+                      : screenWidth * 0.07,
                 ),
               ),
             ),
@@ -120,13 +120,13 @@ class _IosCalculatorViewState extends State<IosCalculatorView> {
       flex: 2,
       child: GridView.count(
         padding: EdgeInsets.fromLTRB(
-          MediaQuery.of(context).size.width * 0.03,
-          MediaQuery.of(context).size.height * 0.03,
-          MediaQuery.of(context).size.width * 0.03,
-          MediaQuery.of(context).size.height * 0.03,
+          screenWidth * 0.03,
+          screenHeight * 0.03,
+          screenWidth * 0.03,
+          screenHeight * 0.03,
         ),
-        crossAxisSpacing: MediaQuery.of(context).size.width * 0.025,
-        mainAxisSpacing: MediaQuery.of(context).size.height * 0.025,
+        crossAxisSpacing: screenWidth * 0.025,
+        mainAxisSpacing: screenHeight * 0.025,
         crossAxisCount: 4,
         clipBehavior: Clip.hardEdge,
         children: _calculatorController.buttons
