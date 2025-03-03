@@ -3,9 +3,6 @@ import 'package:calculator_mvi/src/data/model/calculator_button_config.dart';
 import 'package:calculator_mvi/src/widgets/android_text_style.dart';
 import 'package:flutter/material.dart';
 
-/// UI de um botão estilizado da calculadora para sistema Android.
-///
-/// UI of a styled calculator button for Android system.
 class AndroidCalculatorButton extends StatelessWidget {
   final CalculatorButtonConfig buttonConfig;
   final CalculatorBloc calculatorBloc;

@@ -10,8 +10,6 @@ class Calculation {
       : _equation = "",
         _result = "0";
 
-  /// Getters Methods
-  ///
   String get equation => _equation;
   String get result => _result;
 
