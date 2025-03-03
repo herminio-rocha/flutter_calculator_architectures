@@ -5,12 +5,12 @@ import 'package:flutter/cupertino.dart';
 
 class IosCalculatorButton extends StatelessWidget {
   final CalculatorButtonConfig buttonConfig;
-  final CalculatorBloc bloc;
+  final CalculatorBloc calculatorBloc;
 
   const IosCalculatorButton({
     super.key,
     required this.buttonConfig,
-    required this.bloc,
+    required this.calculatorBloc,
   });
 
   @override
@@ -27,7 +27,7 @@ class IosCalculatorButton extends StatelessWidget {
           ),
         ),
         child: CupertinoButton(
-          onPressed: () => buttonConfig.onPressed(bloc),
+          onPressed: () => buttonConfig.onPressed(calculatorBloc),
           padding: EdgeInsets.zero,
           minSize: 70,
           child: SizedBox(

@@ -120,7 +120,8 @@ class _IosCalculatorViewState extends State<IosCalculatorView> {
                           .map(
                             (buttonConfig) => IosCalculatorButton(
                               buttonConfig: buttonConfig,
-                              bloc: BlocProvider.of<CalculatorBloc>(context),
+                              calculatorBloc:
+                                  BlocProvider.of<CalculatorBloc>(context),
                             ),
                           )
                           .toList(),
