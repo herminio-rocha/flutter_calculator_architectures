@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:calculator_mvi/src/data/model/calculation.dart';
 import 'package:calculator_mvi/src/data/repository/calculator_button_config_repository.dart';
+import 'package:calculator_mvi/src/screens/android_calculator_view.dart';
 import 'package:calculator_mvi/src/screens/ios_calculator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +45,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     const Iterable<Locale> supportedLocales = [
@@ -59,28 +61,27 @@ class MyApp extends StatelessWidget {
 
     Locale locale = ui.PlatformDispatcher.instance.locale;
 
-    return
-        //  Platform.isAndroid
-        //     ? MaterialApp(
-        //         title: 'Flutter Calculator',
-        //         theme: ThemeData(
-        //           primarySwatch: Colors.grey,
-        //         ),
-        //         debugShowCheckedModeBanner: false,
-        //         supportedLocales: supportedLocales,
-        //         localizationsDelegates: localizationsDelegates,
-        //         locale: locale,
-        //         home: const AndroidCalculatorView(),
-        //       )
-        //     :
-        CupertinoApp(
-      title: "Flutter Calculator",
-      theme: const CupertinoThemeData(primaryColor: CupertinoColors.systemGrey),
-      debugShowCheckedModeBanner: false,
-      supportedLocales: supportedLocales,
-      localizationsDelegates: localizationsDelegates,
-      locale: locale,
-      home: const IosCalculatorView(),
-    );
+    return Platform.isAndroid
+        ? MaterialApp(
+            title: 'Flutter Calculator',
+            theme: ThemeData(
+              primarySwatch: Colors.grey,
+            ),
+            debugShowCheckedModeBanner: false,
+            supportedLocales: supportedLocales,
+            localizationsDelegates: localizationsDelegates,
+            locale: locale,
+            home: const AndroidCalculatorView(),
+          )
+        : CupertinoApp(
+            title: "Flutter Calculator",
+            theme: const CupertinoThemeData(
+                primaryColor: CupertinoColors.systemGrey),
+            debugShowCheckedModeBanner: false,
+            supportedLocales: supportedLocales,
+            localizationsDelegates: localizationsDelegates,
+            locale: locale,
+            home: const IosCalculatorView(),
+          );
   }
 }
